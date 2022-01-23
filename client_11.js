@@ -53,6 +53,26 @@ function SendData(data) {
     }
 
     client.write(data);
+ 
+}
+
+
+function CloseConnection() {
+    if(!client) {
+        console.log("--Connection is not open or closed--".red);
+        setTimeout(function() {
+            menu();
+        }, 0);
+        return;
+    }
+
+    client.destroy();
+    client = null;
+    console.log("Connection closed successfully!".yellow);
+    setTimeout(function() {
+        menu();
+    }, 0);
+
 }
 
 
