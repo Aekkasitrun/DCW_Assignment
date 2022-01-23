@@ -17,15 +17,15 @@ net.createServer(function(sock){
             case 1:
                 current_key = data
                 sock.write("" + db[current_key] || 0)
-                sock.write('"What do you want ?"')
+                sock.write('"What do you want ?\n"')
                 sock.write('"type m for steamed rice topped with chicken"')
-                sock.write('"price : 35"')
+                sock.write('" price : 35\n"')
                 sock.write('"type p for fried rice"')
-                sock.write('"price : 50"')
+                sock.write('" price : 50\n"')
                 sock.write('"type k for Spicy fried chicken with basil leaves"')
-                sock.write('"price : 50"')
+                sock.write('" price : 50\n"')
                 sock.write('"type e for Omelet"')
-                sock.write('"price : 30"')
+                sock.write('" price : 30\n"')
                 sock.write('"type s to confirm your menu"')
                 state = 2 //wait for key
                 break
