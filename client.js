@@ -6,7 +6,7 @@ client.connect(PORT, HOST, function() {
     console.log('CONNECTED TO: ' + HOST + ':' + PORT);
     // Write a message to the socket as soon as the client is connected,
     //the server will receive it as message from the client 
-    client.write('HELLO');
+    client.write('I am Chuck Norris!');
 });
 // Add a 'data' event handler for the client socket
 // data is what the server sent to this socket
