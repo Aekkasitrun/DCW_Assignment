@@ -13,7 +13,7 @@ net.createServer(function(sock){
                     sock.write('"type you name"')
                     state = 1 //wait for key
                 }
-                break;
+                break
             case 1:
                 current_key = data
                 sock.write("" + db[current_key] || 0)
@@ -28,7 +28,7 @@ net.createServer(function(sock){
                 sock.write('" price : 30\n"')
                 sock.write('"type s to confirm your menu"')
                 state = 2 //wait for key
-                break;
+                break
             case 2:
                 if(data == 's' || data == 'S'){
                     sock.close()

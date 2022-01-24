@@ -35,7 +35,6 @@ function OpenConnection() {
 
     client.connect(PORT, HOST, function (){
         console.log("Connection opend successfully!".green);
-        //client.write('HELLO');
         setTimeout(function () {
             menu();
         }, 0);
