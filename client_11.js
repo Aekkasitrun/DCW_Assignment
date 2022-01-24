@@ -35,7 +35,7 @@ function OpenConnection() {
 
     client.connect(PORT, HOST, function (){
         console.log("Connection opend successfully!".green);
-        client.write('HELLO');
+        //client.write('HELLO');
         setTimeout(function () {
             menu();
         }, 0);
@@ -78,7 +78,16 @@ function CloseConnection() {
 
 
 function menu() {
-    var lineRead = readlineSync.question("\n\n---------------------------------------------------------\n|\t\t\tChoose Option\t\t\t|\n|\tPress 1 to Open Server\t\t\t\t|\n|\tPress 2 to Send your command\t\t\t|\n|\tPress 3 to Close Server\t\t\t\t|\n|\tPress 4 to Quit\t\t\t\t\t|\n---------------------------------------------------------\nYour option :");
+    
+    console.log("\n\n---------------------------------------------------------\n|\t\t\tChoose Option\t\t\t|");
+    console.log("|\tPress 1 to Open Server\t\t\t\t|");
+    console.log("|\tPress 2 to Send your command\t\t\t|");
+    console.log("|\tPress 3 to Close Server\t\t\t\t|");
+    console.log("|\tPress 4 to Quit\t\t\t\t\t|");
+    console.log("---------------------------------------------------------\n");
+    
+    
+    var lineRead = readlineSync.question("Your option :");
 
     switch (lineRead) {
         case "1":
