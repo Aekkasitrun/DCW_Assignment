@@ -21,16 +21,6 @@ net.createServer(function(sock){
             case 1:
                 current_key = data
                 sock.write("Hello " + current_key + "\nWhat do you want ?")
-                //sock.write('\n"What do you want ?"')
-                //sock.write('"type m for steamed rice topped with chicken price : 35\n"')
-                //sock.write('" price : 35\n"')
-                //sock.write('"type p for fried rice price : 50\n"')
-                //sock.write('" price : 50\n"')
-                //sock.write('"type k for Spicy fried chicken with basil leaves price : 50\n"')
-                //sock.write('" price : 50\n"')
-                //sock.write('"type e for Omelet price : 30\n"')
-                //sock.write('" price : 30\n"')
-                //sock.write('"type s to confirm your menu"')
                 state = 2 //wait for key
                 break
             
@@ -52,9 +42,7 @@ net.createServer(function(sock){
                         if(!db[current_key]){
                             db[current_key] = 0
                         }
-                        //db[current_key] += 50
                         sock.write("Your Price: " + db[current_key] + "\nThank you.")
-                        //sock.write("\nThank you.")
                     }catch(e){
                         sock.write('INVALID')
                     }
