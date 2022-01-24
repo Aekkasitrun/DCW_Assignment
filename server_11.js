@@ -11,6 +11,7 @@ net.createServer(function(sock){
             case 0:
                 if(data == 'HELLO'){
                     sock.write('"type you name"')
+                    
                     state = 1 //wait for key
                 }
                 else{
