@@ -1,23 +1,107 @@
-var net = require('net');
-var HOST = '127.0.0.1';
+var readlineSync = require("readline-sync");
+var colors = require("colors");
+
+var net = require("net");
+var HOST = "127.0.0.1";
 var PORT = 6969;
-var client = new net.Socket();
-client.connect(PORT, HOST, function() {
-    console.log('CONNECTED TO: ' + HOST + ':' + PORT);
-    // Write a message to the socket as soon as the client is connected,
-    //the server will receive it as message from the client 
-    client.write('HELLO');
-});
-// Add a 'data' event handler for the client socket
-// data is what the server sent to this socket
-client.on('data', function(data) {
+var client = null;
 
-    console.log('DATA: ' + data);
-    // Close the client socket completely
+function OpenConnection() {
+    if(client) {
+        console.log("--Connection is already open--".red);
+        setTimeout(function () {
+            menu();
+        }, 0);
+        return;
+    }
+
+    client = new net.Socket();
+
+    client.on("error", function (err){
+        client.destroy();
+        client = null;
+        console.log("ERROR: Connection could not be opened. Msg: %s".red, err.message);
+        setTimeout(function () {
+            menu();
+        }, 0);
+    });
+
+    client.on("data", function (data){
+        console.log("Received: %s".cyan, data);
+        setTimeout(function () {
+            menu();
+        }, 0);
+    });
+
+    client.connect(PORT, HOST, function (){
+        console.log("Connection opend successfully!".green);
+        setTimeout(function () {
+            menu();
+        }, 0);
+    });
+
+}
+
+
+function SendData(data) {
+    if(!client) {
+        console.log("--Connection is not open or closed--".red);
+        setTimeout(function () {
+            menu();
+        }, 0);
+        return;
+    }
+
+    client.write(data);
+ 
+}
+
+
+function CloseConnection() {
+    if(!client) {
+        console.log("--Connection is not open or closed--".red);
+        setTimeout(function() {
+            menu();
+        }, 0);
+        return;
+    }
+
     client.destroy();
-});
+    client = null;
+    console.log("Connection closed successfully!".yellow);
+    setTimeout(function() {
+        menu();
+    }, 0);
 
-// Add a 'close' event handler for the client socket
-client.on('close', function() {
-    console.log('Connection closed');
-});
+}
+
+
+function menu() {
+    var lineRead = readlineSync.question("\n\nEnter Option (1-Open, 2-Send, 3-Close, 4-Quit):");
+
+    switch (lineRead) {
+        case "1":
+            OpenConnection();
+            break;
+        case "2":
+            var data = readlineSync.question("Enter data to send:");
+            SendData(data);
+            break;
+        case "3":
+            CloseConnection();
+            break;
+        case "4":
+            return;
+            break;
+        default:
+            setTimeout(function () {
+                menu();
+            }, 0);
+            break;
+
+    }
+}
+
+setTimeout(function () {
+    menu();
+}, 0);
