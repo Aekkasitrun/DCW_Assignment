@@ -13,26 +13,53 @@ net.createServer(function(sock){
                     sock.write('"type you name"')
                     state = 1 //wait for key
                 }
+                else{
+                    sock.write("What is this command? Please type HELLO.")
+                    state = 0
+                }
                 break
             case 1:
                 current_key = data
-                sock.write("" + db[current_key] || 0)
-                sock.write('"What do you want ?\n""type m for steamed rice topped with chicken price : 35\n""type p for fried rice price : 50\n"')
+                sock.write("Hello " + current_key + "\nWhat do you want ?")
+                //sock.write('\n"What do you want ?"')
                 //sock.write('"type m for steamed rice topped with chicken price : 35\n"')
                 //sock.write('" price : 35\n"')
                 //sock.write('"type p for fried rice price : 50\n"')
                 //sock.write('" price : 50\n"')
-                sock.write('"type k for Spicy fried chicken with basil leaves price : 50\n"')
+                //sock.write('"type k for Spicy fried chicken with basil leaves price : 50\n"')
                 //sock.write('" price : 50\n"')
-                sock.write('"type e for Omelet price : 30\n"')
+                //sock.write('"type e for Omelet price : 30\n"')
                 //sock.write('" price : 30\n"')
-                sock.write('"type s to confirm your menu"')
+                //sock.write('"type s to confirm your menu"')
                 state = 2 //wait for key
                 break
+            
             case 2:
+                if(data == 'MENU'){
+                    sock.write('"MENU"\n""type m for steamed rice topped with chicken price : 35\n""type p for fried rice price : 50\n""type k for Spicy fried chicken with basil leaves price : 50\n""type e for Omelet price : 30\n""type s to confirm your menu"')
+                    state = 3 //wait for key
+                }
+                else{
+                    sock.write("What is this command? Please type MENU.")
+                    state = 2
+                }
+                break
+                
+
+            case 3:
                 if(data == 's' || data == 'S'){
+                    try{
+                        if(!db[current_key]){
+                            db[current_key] = 0
+                        }
+                        //db[current_key] += 50
+                        sock.write("Your Price: " + db[current_key] + "\nThank you.")
+                        //sock.write("\nThank you.")
+                    }catch(e){
+                        sock.write('INVALID')
+                    }
                     sock.close()
-                    state = 3 //end
+                    state = 4 //end
                 }
                 else if(data == 'k' || data == 'K'){
                     try{
@@ -40,7 +67,7 @@ net.createServer(function(sock){
                             db[current_key] = 0
                         }
                         db[current_key] += 50
-                        sock.write("" + db[current_key])
+                        sock.write("All Price: " + db[current_key])
                     }catch(e){
                         sock.write('INVALID')
                     }
@@ -51,7 +78,7 @@ net.createServer(function(sock){
                             db[current_key] = 0
                         }
                         db[current_key] += 50
-                        sock.write("" + db[current_key])
+                        sock.write("All Price: " + db[current_key])
                     }catch(e){
                         sock.write('INVALID')
                     }
@@ -62,7 +89,7 @@ net.createServer(function(sock){
                             db[current_key] = 0
                         }
                         db[current_key] += 35
-                        sock.write("" + db[current_key])
+                        sock.write("All Price: " + db[current_key])
                     }catch(e){
                         sock.write('INVALID')
                     }
@@ -73,7 +100,7 @@ net.createServer(function(sock){
                             db[current_key] = 0
                         }
                         db[current_key] += 30
-                        sock.write("" + db[current_key])
+                        sock.write("All Price: " + db[current_key])
                     }catch(e){
                         sock.write('INVALID')
                     }
